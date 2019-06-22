@@ -1,0 +1,8 @@
+name: CopyWorld
+version: ${project.version}
+main: laakii.izda.copyworld.CopyWorld
+commands:
+  /create:
+    description: create region
+    aliases: [do]
+
