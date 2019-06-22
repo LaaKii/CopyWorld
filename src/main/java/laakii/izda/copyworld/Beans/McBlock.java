@@ -2,20 +2,19 @@ package laakii.izda.copyworld.Beans;
 
 public class McBlock {
 
-    private Coordinate blockCoord;
+    private int blockId;
+    private int blockCoordId;
     private String blockMat;
 
-    public McBlock(Coordinate blockCoord, String blockMat) {
-        this.blockCoord = blockCoord;
+    public McBlock(int blockId, int blockCoordId, String blockMat) {
+        this.blockId = blockId;
+        this.blockCoordId = blockCoordId;
         this.blockMat = blockMat;
     }
 
-    public Coordinate getBlockCoord() {
-        return blockCoord;
-    }
-
-    public void setBlockCoord(Coordinate blockCoord) {
-        this.blockCoord = blockCoord;
+    public McBlock(int blockCoord, String blockMat) {
+        this.blockCoordId = blockCoordId;
+        this.blockMat = blockMat;
     }
 
     public String getBlockMat() {
@@ -26,10 +25,26 @@ public class McBlock {
         this.blockMat = blockMat;
     }
 
+    public int getBlockId() {
+        return blockId;
+    }
+
+    public void setBlockId(int blockId) {
+        this.blockId = blockId;
+    }
+
+    public int getBlockCoordId() {
+        return blockCoordId;
+    }
+
+    public void setBlockCoordId(int blockCoordId) {
+        this.blockCoordId = blockCoordId;
+    }
+
     @Override
     public String toString() {
         return "McBlock{" +
-                "blockCoord=" + blockCoord +
+                "blockCoord=" + blockCoordId +
                 ", blockMat='" + blockMat + '\'' +
                 '}';
     }

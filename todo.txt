@@ -1,3 +1,4 @@
 - connection string undso auslagern
 - villt. hibernate einbinden
 - interface mit create funktion
+- getlatestBlock wird nicht richtig im parallelstream funktionieren

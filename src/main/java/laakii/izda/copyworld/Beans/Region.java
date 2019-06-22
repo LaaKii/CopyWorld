@@ -1,39 +1,49 @@
 package laakii.izda.copyworld.Beans;
 
 public class Region {
-    private int id;
-    private Coordinate startCood, endCoord;
+    private int regionId;
+    private int startCoordId, endCoordId;
     private String name;
 
-    public Region(int id, Coordinate startCood, Coordinate endCoord, String name) {
-        this.id = id;
-        this.startCood = startCood;
-        this.endCoord = endCoord;
+    public Region(int regionId, String regionName, int startCoordId, int endCoordId) {
+        this.regionId = regionId;
+        this.startCoordId = startCoordId;
+        this.endCoordId = endCoordId;
+        this.name = regionName;
+    }
+
+    public Region(int startCoordId, int endCoordId, String name) {
+        this.startCoordId = startCoordId;
+        this.endCoordId = endCoordId;
         this.name = name;
     }
 
-    public int getId() {
-        return id;
+    public Region(){
+
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public int getRegionId() {
+        return regionId;
     }
 
-    public Coordinate getStartCood() {
-        return startCood;
+    public void setRegionId(int regionId) {
+        this.regionId = regionId;
     }
 
-    public void setStartCood(Coordinate startCood) {
-        this.startCood = startCood;
+    public int getStartCoordId() {
+        return startCoordId;
     }
 
-    public Coordinate getEndCoord() {
-        return endCoord;
+    public void setStartCoordId(int startCoordId) {
+        this.startCoordId = startCoordId;
     }
 
-    public void setEndCoord(Coordinate endCoord) {
-        this.endCoord = endCoord;
+    public int getEndCoordId() {
+        return endCoordId;
+    }
+
+    public void setEndCoordId(int endCoordId) {
+        this.endCoordId = endCoordId;
     }
 
     public String getName() {
@@ -42,5 +52,15 @@ public class Region {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Region{" +
+                "regionId=" + regionId +
+                ", startCoordId=" + startCoordId +
+                ", endCoordId=" + endCoordId +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

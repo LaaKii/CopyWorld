@@ -6,6 +6,10 @@ public class Coordinate {
 
     public Coordinate(int id, int x, int y, int z) {
         this.id = id;
+
+    }
+
+    public Coordinate(int x, int y, int z){
         this.x = x;
         this.y = y;
         this.z = z;
@@ -41,5 +45,15 @@ public class Coordinate {
 
     public void setZ(int z) {
         this.z = z;
+    }
+
+    @Override
+    public String toString() {
+        return "Coordinate{" +
+                "id=" + id +
+                ", x=" + x +
+                ", y=" + y +
+                ", z=" + z +
+                '}';
     }
 }

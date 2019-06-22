@@ -12,6 +12,15 @@ public class RegionBlock {
         this.blockId = blockId;
     }
 
+    public RegionBlock(){
+
+    }
+
+    public RegionBlock(int regionId, int blockId){
+        this.regionId = regionId;
+        this.blockId = blockId;
+    }
+
     public int getRegionBlockId() {
         return regionBlockId;
     }
