@@ -112,4 +112,20 @@ public class DbHandler {
             return false;
         }
     }
+
+
+    public Region getRegionByName(String regionName){
+        try {
+            Statement ps;
+            ps = conn.createStatement();
+            ResultSet rs = ps.executeQuery("select * from region where regionName = '" + regionName + "'");
+            if (rs.next()){
+                return new Region(rs.getInt(1),rs.getString(2),rs.getInt(3),rs.getInt(4));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

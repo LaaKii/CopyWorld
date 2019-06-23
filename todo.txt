@@ -2,3 +2,7 @@
 - villt. hibernate einbinden
 - interface mit create funktion
 - getlatestBlock wird nicht richtig im parallelstream funktionieren
+- mehr bearbeitungsfunktionen
+- refactoring in onCommand method
+- args validieren
+- optionals verwenden

@@ -37,7 +37,7 @@ public class Create implements CommandExecutor {
         allBlocksToCopy.stream().forEach(System.out::println);
 
         Region region = new Region();
-        region.setName("new region by: " + sender.getName());
+        region.setName(args[3]);
         Coordinate startCoord = new Coordinate((int)currLocation.getX(),(int)currLocation.getY(),(int)currLocation.getZ());
         dbHandler.createCoord(startCoord);
         startCoord.setId(dbHandler.getLatestCoord().getId());
@@ -65,6 +65,4 @@ public class Create implements CommandExecutor {
         }
         return true;
     }
-
-
 }
