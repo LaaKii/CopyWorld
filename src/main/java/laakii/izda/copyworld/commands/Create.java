@@ -55,7 +55,6 @@ public class Create implements CommandExecutor {
         for(Block b : allBlocksToCopy){
             Coordinate coord = new Coordinate(b.getX(),b.getY(),b.getZ());
             dbHandler.createCoord(coord);
-            //TODO
             coord.setId(dbHandler.getLatestCoord().getId());
             McBlock mcBlock = new McBlock(coord.getId(),b.getBlockData().getMaterial().name());
             dbHandler.createBlock(mcBlock);

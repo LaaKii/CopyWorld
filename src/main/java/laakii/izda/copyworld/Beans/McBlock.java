@@ -13,7 +13,7 @@ public class McBlock {
     }
 
     public McBlock(int blockCoord, String blockMat) {
-        this.blockCoordId = blockCoordId;
+        this.blockCoordId = blockCoord;
         this.blockMat = blockMat;
     }
 

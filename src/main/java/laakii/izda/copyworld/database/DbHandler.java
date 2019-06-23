@@ -12,7 +12,6 @@ public class DbHandler {
     private Connection conn = DbManager.getConnection();
 
     public boolean createCoord(Coordinate coordToCreate){
-        System.out.println("Creating new Coord: " + coordToCreate.toString());
         try {
             String sql = "Insert into coordinate(xCoord, yCoord, zCoord) values (?,?,?)";
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -72,7 +71,6 @@ public class DbHandler {
     }
 
     public boolean createBlock(McBlock blockToCreate){
-        System.out.println("creating new block: " + blockToCreate.toString());
         try {
             PreparedStatement ps = conn.prepareStatement("Insert into mcblock(blockCoord, blockMat) values (?,?)");
             ps.setInt(1,blockToCreate.getBlockCoordId());
