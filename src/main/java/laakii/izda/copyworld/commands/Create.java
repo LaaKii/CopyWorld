@@ -26,12 +26,12 @@ public class Create implements CommandExecutor {
     private DbHandler dbHandler = new DbHandler();
     private Validator validator = new Validator("Create");
 
+    //create <x> <y> <z> <regionName>
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
-        if (validator.validateArgs(args)){
-            return false;
-        }
+//        if (validator.validateArgs(args)){
+//            return false;
+//        }
         Player player = (Player) sender;
         currWorld = player.getWorld();
 

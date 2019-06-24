@@ -6,6 +6,9 @@ public class Coordinate {
 
     public Coordinate(int id, int x, int y, int z) {
         this.id = id;
+        this.x=x;
+        this.y=y;
+        this.z=z;
     }
 
     public Coordinate(){

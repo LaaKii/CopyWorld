@@ -27,21 +27,27 @@ public class Paste implements CommandExecutor {
     //paste <regionName>
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if(!validator.validateArgs(args)){
-            return false;
-        }
+//        if(!validator.validateArgs(args)){
+//            return false;
+//        }
+
+        System.out.println("paste region called for region: " + args[0]);
         Player player = (Player) sender;
 
         Region region = dbHandler.getRegionByName(args[0]);
         List<RegionBlock> allRegionBlock = dbHandler.getAllRegionBlockByRegion(region);
+        System.out.println("all regionBlock: ");
+        allRegionBlock.stream().forEach(System.out::println);
         Coordinate startCoord = dbHandler.getCoordinateById(region.getStartCoordId());
         Location originStartPosi = new Location(player.getWorld(), startCoord.getX(),startCoord.getY(),startCoord.getZ());
         List<Map<Location, McBlock>> coordinatesInNewWorld = new ArrayList<>();
         Map<Location, McBlock> mapLocToMcBlock = new HashMap<>();
 
         for (RegionBlock rb : allRegionBlock){
-            Coordinate temp = dbHandler.getCoordinateById(rb.getBlockId());
+            Coordinate temp = dbHandler.getCoordinateOfBlockById(rb.getBlockId());
+            System.out.println("Coord for id: " + rb.getBlockId() + "\t"+ temp.toString());
             McBlock mcBlock = dbHandler.getBlockById(rb.getBlockId());
+            System.out.println("Block for id: " + rb.getBlockId()+  "\t" + mcBlock.toString());
             Location originCoordinate = new Location(player.getWorld(), temp.getX(), temp.getY(), temp.getZ());
             mapLocToMcBlock.put(blockCalculator.calcCoordinate(player.getWorld(), originStartPosi, originCoordinate, player.getLocation().subtract(1,1,1)),mcBlock);
             coordinatesInNewWorld.add(mapLocToMcBlock);

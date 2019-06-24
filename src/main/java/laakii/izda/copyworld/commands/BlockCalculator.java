@@ -52,6 +52,7 @@ public class BlockCalculator {
     public Location calcCoordinate(World world, Location originStartPosition, Location originCoordinate, Location currentPosition){
 
         System.out.println("Calculating where new blocks have to be...");
+//        System.out.println("OriginStartPosition:\t" + originStartPosition.getX() +" OriginCoordinate: " + originCoordinate.getX()+" CurrentPosition: "+currentPosition.getX());
        int xDiff = (Math.abs((int)originStartPosition.getX() - (int)originCoordinate.getX()));
         System.out.println("xDiff: " + xDiff);
        int yDiff = (Math.abs((int)originStartPosition.getY() - (int)originCoordinate.getY()));

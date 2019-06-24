@@ -7,5 +7,7 @@ commands:
     aliases: [do]
   /changeRegion:
     description: change all block of region by regionName
+  /paste:
+    description: paste region by name
 
 

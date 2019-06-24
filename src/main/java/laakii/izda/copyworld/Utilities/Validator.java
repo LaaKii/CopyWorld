@@ -15,7 +15,7 @@ public class Validator {
         if (commandName.equalsIgnoreCase("Create")){
             return dbHandler.isRegionNameAvailable(args[3]);
         }
-        if (commandName.equals("ChangeRegion")){
+        if (commandName.equalsIgnoreCase("ChangeRegion")){
             return true;
         }
         return false;

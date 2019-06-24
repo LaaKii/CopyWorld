@@ -138,8 +138,26 @@ public class DbHandler {
             PreparedStatement ps = conn.prepareStatement("select * from coordinate where coordinateId = ?");
             ps.setInt(1,id);
             ResultSet rs = ps.executeQuery();
+            System.out.println("QUERY: " + ps);
             if (rs.next()){
-                return new Coordinate(rs.getInt(1),rs.getInt(2),rs.getInt(3),rs.getInt(4));
+                return new Coordinate(rs.getInt("coordinateId"),rs.getInt("xCoord"),rs.getInt("yCoord"),rs.getInt("zCoord"));
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public Coordinate getCoordinateOfBlockById(int blockId){
+        try {
+            PreparedStatement ps = conn.prepareStatement("select * from mcblock where blockId = ?");
+            ps.setInt(1,blockId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()){
+               return getCoordinateById(rs.getInt("blockCoord"));
             }
             rs.close();
             ps.close();
@@ -153,7 +171,7 @@ public class DbHandler {
     public List<RegionBlock> getAllRegionBlockByRegion(Region r){
         try {
             List<RegionBlock> allRegionBlock = new ArrayList<>();
-            PreparedStatement ps = conn.prepareStatement("Select * from regionblock where regionId = ? LIMIT 1;");
+            PreparedStatement ps = conn.prepareStatement("Select * from regionblock where regionId = ?;");
             ps.setInt(1,r.getRegionId());
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
@@ -211,7 +229,7 @@ public class DbHandler {
 
     public McBlock getBlockById(int id){
         try {
-            PreparedStatement ps = conn.prepareStatement("select * from mcblock where coordinateId = ? LIMIT 1;");
+            PreparedStatement ps = conn.prepareStatement("select * from mcblock where blockId = ? LIMIT 1;");
             ps.setInt(1,id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()){
