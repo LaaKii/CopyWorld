@@ -4,6 +4,7 @@ import laakii.izda.copyworld.Beans.Coordinate;
 import laakii.izda.copyworld.Beans.McBlock;
 import laakii.izda.copyworld.Beans.Region;
 import laakii.izda.copyworld.Beans.RegionBlock;
+import laakii.izda.copyworld.Utilities.Validator;
 import laakii.izda.copyworld.database.DbHandler;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -23,9 +24,14 @@ public class Create implements CommandExecutor {
     private World currWorld;
     private BlockCalculator blockCalculator = new BlockCalculator();
     private DbHandler dbHandler = new DbHandler();
+    private Validator validator = new Validator("Create");
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+
+        if (validator.validateArgs(args)){
+            return false;
+        }
         Player player = (Player) sender;
         currWorld = player.getWorld();
 
@@ -65,4 +71,5 @@ public class Create implements CommandExecutor {
         }
         return true;
     }
+
 }

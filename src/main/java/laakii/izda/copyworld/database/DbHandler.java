@@ -4,8 +4,11 @@ import laakii.izda.copyworld.Beans.Coordinate;
 import laakii.izda.copyworld.Beans.McBlock;
 import laakii.izda.copyworld.Beans.Region;
 import laakii.izda.copyworld.Beans.RegionBlock;
+import org.bukkit.Material;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DbHandler {
 
@@ -116,16 +119,76 @@ public class DbHandler {
 
     public Region getRegionByName(String regionName){
         try {
-            Statement ps;
-            ps = conn.createStatement();
-            ResultSet rs = ps.executeQuery("select * from region where regionName = '" + regionName + "'");
+            PreparedStatement ps = conn.prepareStatement("select * from region where regionName = ?");
+            ps.setString(1,regionName);
+            ResultSet rs = ps.executeQuery();
             if (rs.next()){
                 return new Region(rs.getInt(1),rs.getString(2),rs.getInt(3),rs.getInt(4));
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return null;
+    }
+
+    public List<RegionBlock> getAllRegionBlockByRegion(Region r){
+        try {
+            List<RegionBlock> allRegionBlock = new ArrayList<>();
+            PreparedStatement ps = conn.prepareStatement("Select * from regionblock where regionId = ?");
+            ps.setInt(1,r.getRegionId());
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+               allRegionBlock.add(new RegionBlock(rs.getInt(1),rs.getInt(2),rs.getInt(3)));
+            }
+            return allRegionBlock;
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    public void changeAllBlocksInRegionToGivenBlock(String regionName , Material resultBlock){
+        Region r = getRegionByName(regionName);
+        List<RegionBlock> allRegionBlocks = getAllRegionBlockByRegion(r);
+        allRegionBlocks.parallelStream().forEach(regionBlock -> updateBlockTypeByBlockId(new BlockIdRange(regionBlock.getBlockId()),resultBlock));
+    }
+
+    public boolean changeSpecificBlocksInRegionToGivenBlock(Region regionName, Material blockToChange, Material resultBlock){
+
+        return false;
+    }
+
+    public boolean updateBlockTypeByBlockId(BlockIdRange range, Material material){
+        try {
+            PreparedStatement ps = conn.prepareStatement("update mcblock set blockMat = ? where blockId >= ? && blockId <= ?");
+            ps.setString(1,material.name());
+            ps.setInt(2,range.getIdStart());
+            ps.setInt(3,range.getIdEnd());
+            ps.executeLargeUpdate();
+            System.out.println("Blocks successfuly updated to: " + material.name());
+            return true;
+        }catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean isRegionNameAvailable(String regionNameToCheck){
+        try {
+            PreparedStatement ps = conn.prepareStatement("select * from region LIMIT 1;");
+            if (ps.executeQuery().next()){
+                System.out.println("Region Name is already used. Use a unique one.");
+                return false;
+            }else{
+                return false;
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }

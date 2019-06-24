@@ -5,4 +5,7 @@ commands:
   /create:
     description: create region
     aliases: [do]
+  /changeRegion:
+    description: change all block of region by regionName
+
 
