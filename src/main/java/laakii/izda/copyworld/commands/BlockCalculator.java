@@ -1,6 +1,8 @@
 package laakii.izda.copyworld.commands;
 
+import laakii.izda.copyworld.Beans.Coordinate;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 
 import java.util.HashSet;
@@ -45,6 +47,27 @@ public class BlockCalculator {
         }
 
         return blocks;
+    }
+
+    public Location calcCoordinate(World world, Location originStartPosition, Location originCoordinate, Location currentPosition){
+
+        System.out.println("Calculating where new blocks have to be...");
+       int xDiff = (Math.abs((int)originStartPosition.getX() - (int)originCoordinate.getX()));
+        System.out.println("xDiff: " + xDiff);
+       int yDiff = (Math.abs((int)originStartPosition.getY() - (int)originCoordinate.getY()));
+        System.out.println("yDiff: " + yDiff);
+       int zDiff = ((int)Math.abs(originStartPosition.getZ() - (int)originCoordinate.getZ()));
+        System.out.println("zDiff: " + zDiff);
+
+        int calcX,calcY,calcZ;
+        calcX = (int)currentPosition.getX()+xDiff;
+        calcY = (int)currentPosition.getY()+yDiff;
+        calcZ = (int)currentPosition.getZ()+zDiff;
+
+        Location resLoc = new Location(world, calcX, calcY, calcZ);
+
+        System.out.println("calculated Coord: " + resLoc.toString());
+        return resLoc;
     }
 
 }

@@ -119,13 +119,30 @@ public class DbHandler {
 
     public Region getRegionByName(String regionName){
         try {
-            PreparedStatement ps = conn.prepareStatement("select * from region where regionName = ?");
+            PreparedStatement ps = conn.prepareStatement("select * from region where regionName = ? LIMIT 1");
             ps.setString(1,regionName);
             ResultSet rs = ps.executeQuery();
             if (rs.next()){
                 return new Region(rs.getInt(1),rs.getString(2),rs.getInt(3),rs.getInt(4));
-
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+
+    }
+
+    public Coordinate getCoordinateById(int id){
+        try {
+            PreparedStatement ps = conn.prepareStatement("select * from coordinate where coordinateId = ?");
+            ps.setInt(1,id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()){
+                return new Coordinate(rs.getInt(1),rs.getInt(2),rs.getInt(3),rs.getInt(4));
+            }
+            rs.close();
+            ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -136,7 +153,7 @@ public class DbHandler {
     public List<RegionBlock> getAllRegionBlockByRegion(Region r){
         try {
             List<RegionBlock> allRegionBlock = new ArrayList<>();
-            PreparedStatement ps = conn.prepareStatement("Select * from regionblock where regionId = ?");
+            PreparedStatement ps = conn.prepareStatement("Select * from regionblock where regionId = ? LIMIT 1;");
             ps.setInt(1,r.getRegionId());
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
@@ -190,6 +207,23 @@ public class DbHandler {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public McBlock getBlockById(int id){
+        try {
+            PreparedStatement ps = conn.prepareStatement("select * from mcblock where coordinateId = ? LIMIT 1;");
+            ps.setInt(1,id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()){
+                return new McBlock(rs.getInt(1),rs.getInt(2),rs.getString(3));
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     public boolean isRegionNameAvailable(String regionNameToCheck){
