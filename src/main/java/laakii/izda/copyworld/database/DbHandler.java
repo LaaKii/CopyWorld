@@ -156,9 +156,11 @@ public class DbHandler {
         allRegionBlocks.parallelStream().forEach(regionBlock -> updateBlockTypeByBlockId(new BlockIdRange(regionBlock.getBlockId()),resultBlock));
     }
 
-    public boolean changeSpecificBlocksInRegionToGivenBlock(Region regionName, Material blockToChange, Material resultBlock){
-
-        return false;
+    public void changeSpecificBlocksInRegionToGivenBlock(String regionName, Material blockToChange, Material resultBlock){
+        System.out.println("Called with parameters:\t" + regionName + "\t" + blockToChange.name() + "\t" + resultBlock.name());
+        Region r = getRegionByName(regionName);
+        List<RegionBlock> allRegionBlocks = getAllRegionBlockByRegion(r);
+        allRegionBlocks.parallelStream().forEach(regionBlock -> updateBlockTypeByBlockTypeAndBlockId(new BlockIdRange(regionBlock.getBlockId()),blockToChange, resultBlock));
     }
 
     public boolean updateBlockTypeByBlockId(BlockIdRange range, Material material){
@@ -168,7 +170,21 @@ public class DbHandler {
             ps.setInt(2,range.getIdStart());
             ps.setInt(3,range.getIdEnd());
             ps.executeLargeUpdate();
-            System.out.println("Blocks successfuly updated to: " + material.name());
+            return true;
+        }catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean updateBlockTypeByBlockTypeAndBlockId(BlockIdRange range, Material oldMaterial, Material newMaterial){
+        try {
+            PreparedStatement ps = conn.prepareStatement("update mcblock set blockMat = ? where blockMat = ? && blockId >= ? && blockId <= ?");
+            ps.setString(1,oldMaterial.name());
+            ps.setString(2,newMaterial.name());
+            ps.setInt(3,range.getIdStart());
+            ps.setInt(4,range.getIdEnd());
+            ps.executeLargeUpdate();
             return true;
         }catch (SQLException e){
             e.printStackTrace();
@@ -178,7 +194,8 @@ public class DbHandler {
 
     public boolean isRegionNameAvailable(String regionNameToCheck){
         try {
-            PreparedStatement ps = conn.prepareStatement("select * from region LIMIT 1;");
+            PreparedStatement ps = conn.prepareStatement("select * from region where regionName = ? LIMIT 1;");
+            ps.setString(1,regionNameToCheck);
             if (ps.executeQuery().next()){
                 System.out.println("Region Name is already used. Use a unique one.");
                 return false;
