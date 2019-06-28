@@ -13,11 +13,32 @@ public class Validator {
 
     public boolean validateArgs(String[] args){
         if (commandName.equalsIgnoreCase("Create")){
-            return dbHandler.isRegionNameAvailable(args[3]);
+            System.out.println("Checking args: " + args);
+            if (args.length!=4){
+                System.out.println("Illegal Argument parse in //create command");
+                return false;
+            }
+            if(dbHandler.isRegionNameAvailable(args[3])){
+                return true;
+            }else{
+                return false;
+            }
         }
         if (commandName.equalsIgnoreCase("ChangeRegion")){
+            if (args.length!=2 || args.length!=3){
+                System.out.println("Illegal Argument parse in //changeregion command");
+                return false;
+            }
+            return true;
+        }
+        if (commandName.equalsIgnoreCase("Paste")){
+            if (args.length!=1){
+                System.out.println("Illegal Argument parse in //paste command");
+                return false;
+            }
             return true;
         }
         return false;
     }
+
 }

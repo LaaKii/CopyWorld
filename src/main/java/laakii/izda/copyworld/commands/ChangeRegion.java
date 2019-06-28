@@ -17,9 +17,9 @@ public class ChangeRegion implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         System.out.println("Change region called");
-        if(!validator.validateArgs(args)){
-            return false;
-        }
+//        if(!validator.validateArgs(args)){
+//            return false;
+//        }
         int argsLength = args.length;
         if(argsLength>2){
             dbHandler.changeSpecificBlocksInRegionToGivenBlock(args[0], Material.getMaterial(args[1]), Material.getMaterial(args[2]));
